@@ -4,7 +4,8 @@ import bcrypt from "bcryptjs";
 import generateToken from "../utils/createToken.js";
 
 const createUser = asyncHandler(async (req, res) => {
-    const { username, email, password } = req.body
+    
+    const { username, email, password } = req.body;
 
     if(!username || !password || !email){
         throw new Error("Please add all fields");
@@ -70,5 +71,11 @@ const logoutCurrentUser = asyncHandler(async (req , res) =>{
     })
 
     res.status(200).json({message: "Logged out successfully"});
-})
-export { createUser, loginUser, logoutCurrentUser };
+});
+
+const getAllUsers = asyncHandler(async(req , res) =>{
+    const users = await User.find({});
+    res.status(200).json(users);
+});
+
+export { createUser, loginUser, logoutCurrentUser,getAllUsers };
