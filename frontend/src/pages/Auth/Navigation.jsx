@@ -10,8 +10,29 @@ import { FaHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import "./Navigation.css";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useLoginMutation, useLogoutMutation } from "../../redux/api/usersApiSlice";
+import { logout } from "../../redux/features/auth/authSlice";
+
+
 
 const Navigation = () => {
+  const { userInfo } = useSelector((state) => state.auth);
+  const disPatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [logoutApiCall] = useLogoutMutation();
+
+  const logoutHandler = async () => {
+    try {
+      await logoutApiCall().unwrap();
+      disPatch(logout());
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const [dropDownOpen, setDropDownOpen] = useState(false);
   const [showsideBar, setshowsideBar] = useState(false);
 
@@ -66,7 +87,15 @@ const Navigation = () => {
           <span className="hidden nav-item-name mt-12">FAVORITES</span>{" "}
         </Link>
       </div>
-
+      <div className="relative">
+        <button onClick={toggleDropDown} className="flex items-center text-gray-8000 focus:outline-none">
+          {userInfo ? (
+            <span className="text-white">{userInfo.name}</span>
+          ) : (
+            <></>
+          )}
+        </button>
+      </div>
       <ul>
         <li>
           <Link
