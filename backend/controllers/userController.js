@@ -32,6 +32,7 @@ const createUser = asyncHandler(async (req, res) => {
             _id: user._id,
             username: user.username,
             email: user.email,
+            isAdmin: user.isAdmin,
         });
     } catch (error) {
         res.status(400)
@@ -61,6 +62,7 @@ const loginUser = asyncHandler(async (req,res)=>{
         _id: userExist._id,
         username: userExist.username,
         email: userExist.email,
+        isAdmin: userExist.isAdmin,
     });
 });
 
