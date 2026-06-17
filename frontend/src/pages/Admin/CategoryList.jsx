@@ -89,6 +89,7 @@ const CategoryList = () => {
         />
         <br />
         <hr />
+        
 
         <div className="flex flex-wrap">
           {categories?.categories?.map((category) => (
