@@ -15,29 +15,31 @@ import CategoryList from "./pages/Admin/CategoryList.jsx";
 import ProductList from "./pages/Admin/ProductList.jsx";
 import ProductUpdate from "./pages/Admin/ProductUpdate.jsx";
 import AllProducts from "./pages/Admin/AllProducts.jsx";
+import Home from "./pages/Home.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<App/>}>
-      <Route path="/login" element={<Login/>}/>
-      <Route path="/register" element={<Register/>}/>
-      <Route path="/" element={<PrivateRoute/>}>
-        <Route path="/profile" element={<Profile/>}/>
+    <Route path="/" element={<App />}>
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route index={true} path="/" element={<Home />} />
+      <Route path="/" element={<PrivateRoute />}>
+        <Route path="/profile" element={<Profile />} />
       </Route>
-      <Route path="/admin" element={<AdminRoute/>}>
-        <Route path="userlist" element={<UserList/>}/>
-        <Route path="categorylist" element={<CategoryList/>}/>
+      <Route path="/admin" element={<AdminRoute />}>
+        <Route path="userlist" element={<UserList />} />
+        <Route path="categorylist" element={<CategoryList />} />
         <Route path="productlist" element={<ProductList />} />
-        <Route path="allproductslist" element={<AllProducts/>}/>
-        <Route path="productlist/:pageNumber" element={<ProductList/>}/>
-        <Route path="product/update/:_id" element={<ProductUpdate/>}/>
+        <Route path="allproductslist" element={<AllProducts />} />
+        <Route path="productlist/:pageNumber" element={<ProductList />} />
+        <Route path="product/update/:_id" element={<ProductUpdate />} />
       </Route>
-  </Route>
-  )
-)
+    </Route>,
+  ),
+);
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-    <RouterProvider router={router}/>
-  </Provider>
+    <RouterProvider router={router} />
+  </Provider>,
 );

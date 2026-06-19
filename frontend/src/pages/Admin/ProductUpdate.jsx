@@ -46,12 +46,6 @@ const ProductUpdate = () => {
     }
   }, [productData]);
 
-  useEffect(() => {
-    if (categories?.categories?.length > 0 && !category) {
-      setCategory(categories.categories[0]._id);
-    }
-  }, [categories, category]);
-
   const uploadFileHandler = async (e) => {
     const formData = new FormData();
     formData.append("image", e.target.files[0]);
