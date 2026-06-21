@@ -16,7 +16,7 @@ router.route("/:id")
     .get(fetchProductById)
     .put(authenticateUser,authorizeAdmin ,formidable(), updateProductDetails)
     .delete(authenticateUser , authorizeAdmin , removeProduct);
-router.route("/:id/reviews").post(authenticateUser,authorizeAdmin,checkId ,addProductReview);
+router.route("/:id/reviews").post(authenticateUser,checkId ,addProductReview);
 
 
 export default router;
