@@ -11,12 +11,16 @@ import { Link } from "react-router-dom";
 import "./Navigation.css";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useLoginMutation, useLogoutMutation } from "../../redux/api/usersApiSlice";
+import {
+  useLoginMutation,
+  useLogoutMutation,
+} from "../../redux/api/usersApiSlice";
 import { logout } from "../../redux/features/auth/authSlice";
 import FavoritesCount from "../Products/FavoritesCount";
 
 const Navigation = () => {
   const { userInfo } = useSelector((state) => state.auth);
+  const { cartItems } = useSelector((state) => state.cart);
   const disPatch = useDispatch();
   const navigate = useNavigate();
 
@@ -72,10 +76,17 @@ const Navigation = () => {
 
         <Link
           to="/cart"
-          className="flex items-center transition-transform transform hover:translate-x-2"
+          className="relative flex items-center transition-transform transform hover:translate-x-2"
         >
           <AiOutlineShoppingCart className="mr-2 mt-12" size={26} />
-          <span className="hidden nav-item-name mt-12">CART</span>{" "}
+
+          {cartItems.length > 0 && (
+            <span className="absolute top-10 left-3 px-1 text-xs text-white bg-pink-500 rounded-full">
+              {cartItems.reduce((a, c) => a + Number(c.qty), 0)}
+            </span>
+          )}
+
+          <span className="hidden nav-item-name mt-12">CART</span>
         </Link>
 
         <Link to="/favorite" className="flex relative">
@@ -94,7 +105,9 @@ const Navigation = () => {
           className="flex items-center text-white focus:outline-none mt-12"
         >
           {userInfo ? (
-            <span className="text-white">{userInfo.username || userInfo.name}</span>
+            <span className="text-white">
+              {userInfo.username || userInfo.name}
+            </span>
           ) : (
             <></>
           )}
@@ -186,27 +199,27 @@ const Navigation = () => {
         )}
       </div>
       {!userInfo && (
-          <ul>
-            <li>
-              <Link
-                to="/login"
-                className="flex items-center mt-5 transition-transform transform hover:translate-x-2"
-              >
-                <AiOutlineLogin className="mr-2 mt-[4px]" size={26} />
-                <span className="hidden nav-item-name">LOGIN</span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/register"
-                className="flex items-center mt-5 transition-transform transform hover:translate-x-2"
-              >
-                <AiOutlineUserAdd size={26} />
-                <span className="hidden nav-item-name">REGISTER</span>
-              </Link>
-            </li>
-          </ul>
-        )}
+        <ul>
+          <li>
+            <Link
+              to="/login"
+              className="flex items-center mt-5 transition-transform transform hover:translate-x-2"
+            >
+              <AiOutlineLogin className="mr-2 mt-[4px]" size={26} />
+              <span className="hidden nav-item-name">LOGIN</span>
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/register"
+              className="flex items-center mt-5 transition-transform transform hover:translate-x-2"
+            >
+              <AiOutlineUserAdd size={26} />
+              <span className="hidden nav-item-name">REGISTER</span>
+            </Link>
+          </li>
+        </ul>
+      )}
     </div>
   );
 };
