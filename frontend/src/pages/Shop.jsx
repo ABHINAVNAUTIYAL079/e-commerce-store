@@ -11,6 +11,7 @@ import {
 } from "../redux/features/shop/shopSlice";
 import { useFetchCategoriesQuery } from "../redux/api/categoryApiSlice";
 import Loader from "../components/Loader";
+import ProductCard from "./Products/ProductCard";
 
 const Shop = () => {
   const dispatch = useDispatch();
@@ -151,7 +152,7 @@ const Shop = () => {
                 placeholder="Enter Price"
                 value={priceFilter}
                 onChange={handlePriceChange}
-                className="w-full px-3 py-2 placeholder-gray-400 border rounded-lg focus:outline-none focus:ring focus:border-pink-300"
+                className="w-full px-3 py-2 placeholder-gray-400 border rounded-lg focus:outline-none focus:ring focus:border-pink-600"
               />
             </div>
 
@@ -173,7 +174,7 @@ const Shop = () => {
               ) : (
                 products?.map((p) => (
                   <div className="p-3" key={p._id}>
-                    {/* <ProductCard p={p} /> */}
+                    <ProductCard p={p} />
                   </div>
                 ))
               )}
