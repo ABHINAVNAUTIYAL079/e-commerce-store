@@ -16,8 +16,7 @@ const AdminDashboard = () => {
 
   const { data: customers, isLoading: loading } = useGetUsersQuery();
 
-  const { data: orders, isLoading: loadingTwo } =
-    useGetTotalOrdersQuery();
+  const { data: orders, isLoading: loadingTwo } = useGetTotalOrdersQuery();
 
   const { data: salesDetail } = useGetTotalSalesByDateQuery();
 
@@ -99,9 +98,7 @@ const AdminDashboard = () => {
       <AdminMenu />
 
       <section className="xl:ml-[4rem] md:ml-[0rem]">
-        
         <div className="w-[80%] flex justify-around flex-wrap">
-          
           <div className="rounded-lg bg-black p-5 w-[20rem] mt-5">
             <div className="font-bold rounded-full w-[3rem] bg-pink-500 text-center p-3">
               ₹
@@ -138,11 +135,7 @@ const AdminDashboard = () => {
             <p className="mt-5">All Orders</p>
 
             <h1 className="text-xl font-bold">
-              {loadingTwo ? (
-                <Loader />
-              ) : (
-                orders?.totalOrders || 0
-              )}
+              {loadingTwo ? <Loader /> : orders?.totalOrders || 0}
             </h1>
           </div>
         </div>
