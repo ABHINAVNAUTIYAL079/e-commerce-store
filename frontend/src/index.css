@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 body {
-  background: #0f0f10;
-  color: #fff;
+  background: #fff9e2;
+  color: #1F2937;
 }
 
 input,
 textarea {
-  color: #ffffff;
-  background: rgb(97, 97, 97);
+  color: #1F2937;
+  background: #F3F4F6;
 }

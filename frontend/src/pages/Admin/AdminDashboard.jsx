@@ -28,7 +28,7 @@ const AdminDashboard = () => {
       tooltip: {
         theme: "dark",
       },
-      colors: ["#EC4899"],
+      colors: ["#0F766E"],
       dataLabels: {
         enabled: true,
       },
@@ -40,7 +40,7 @@ const AdminDashboard = () => {
         align: "left",
       },
       grid: {
-        borderColor: "#374151",
+        borderColor: "#E5E7EB",
       },
       markers: {
         size: 4,
@@ -99,8 +99,8 @@ const AdminDashboard = () => {
 
       <section className="xl:ml-[4rem] md:ml-[0rem]">
         <div className="w-[80%] flex justify-around flex-wrap">
-          <div className="rounded-lg bg-black p-5 w-[20rem] mt-5">
-            <div className="font-bold rounded-full w-[3rem] bg-pink-500 text-center p-3">
+          <div className="rounded-lg bg-[#1F2937] text-white p-5 w-[20rem] mt-5">
+            <div className="font-bold rounded-full w-[3rem] bg-[#0F766E] text-center p-3">
               ₹
             </div>
 
@@ -115,8 +115,8 @@ const AdminDashboard = () => {
             </h1>
           </div>
 
-          <div className="rounded-lg bg-black p-5 w-[20rem] mt-5">
-            <div className="font-bold rounded-full w-[3rem] bg-pink-500 text-center p-3">
+          <div className="rounded-lg bg-[#1F2937] text-white p-5 w-[20rem] mt-5">
+            <div className="font-bold rounded-full w-[3rem] bg-[#0F766E] text-center p-3">
               👥
             </div>
 
@@ -127,8 +127,8 @@ const AdminDashboard = () => {
             </h1>
           </div>
 
-          <div className="rounded-lg bg-black p-5 w-[20rem] mt-5">
-            <div className="font-bold rounded-full w-[3rem] bg-pink-500 text-center p-3">
+          <div className="rounded-lg bg-[#1F2937] text-white p-5 w-[20rem] mt-5">
+            <div className="font-bold rounded-full w-[3rem] bg-[#0F766E] text-center p-3">
               📦
             </div>
 

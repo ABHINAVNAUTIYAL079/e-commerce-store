@@ -65,7 +65,7 @@ const ProductDetails = () => {
       <div>
         <Link
           to="/"
-          className="text-white font-semibold hover:underline ml-[10rem]"
+          className="text-[#0F766E] font-semibold hover:underline ml-[10rem]"
         >
           Go Back
         </Link>
@@ -100,29 +100,29 @@ const ProductDetails = () => {
               <div className="flex items-center justify-between w-[20rem]">
                 <div className="one">
                   <h1 className="flex items-center mb-6">
-                    <FaStore className="mr-2 text-white" /> Brand:{" "}
+                    <FaStore className="mr-2 text-[#0F766E]" /> Brand:{" "}
                     {product.brand}
                   </h1>
                   <h1 className="flex items-center mb-6 w-[20rem]">
-                    <FaClock className="mr-2 text-white" /> Added:{" "}
+                    <FaClock className="mr-2 text-[#0F766E]" /> Added:{" "}
                     {moment(product.createAt).fromNow()}
                   </h1>
                   <h1 className="flex items-center mb-6">
-                    <FaStar className="mr-2 text-white" /> Reviews:{" "}
+                    <FaStar className="mr-2 text-[#0F766E]" /> Reviews:{" "}
                     {product.numReviews}
                   </h1>
                 </div>
 
                 <div className="two">
                   <h1 className="flex items-center mb-6">
-                    <FaStar className="mr-2 text-white" /> Ratings: {rating}
+                    <FaStar className="mr-2 text-[#0F766E]" /> Ratings: {rating}
                   </h1>
                   <h1 className="flex items-center mb-6">
-                    <FaShoppingCart className="mr-2 text-white" /> Quantity:{" "}
+                    <FaShoppingCart className="mr-2 text-[#0F766E]" /> Quantity:{" "}
                     {product.quantity}
                   </h1>
                   <h1 className="flex items-center mb-6 w-[10rem]">
-                    <FaBox className="mr-2 text-white" /> In Stock:{" "}
+                    <FaBox className="mr-2 text-[#0F766E]" /> In Stock:{" "}
                     {product.countInStock}
                   </h1>
                 </div>
@@ -139,13 +139,13 @@ const ProductDetails = () => {
                     <select
                       value={qty}
                       onChange={(e) => setQty(e.target.value)}
-                      className="p-2 w-[6rem] rounded-lg text-white border border-amber-50"
+                      className="p-2 w-[6rem] rounded-lg text-[#1F2937] border border-gray-300"
                     >
                       {[...Array(product.countInStock).keys()].map((x) => (
                         <option
                           value={x + 1}
                           key={x + 1}
-                          className="bg-black border"
+                          className="bg-white border"
                         >
                           {x + 1}
                         </option>
@@ -159,7 +159,7 @@ const ProductDetails = () => {
                 <button
                   onClick={addToCartHandler}
                   disabled={product.countInStock == 0}
-                  className="bg-pink-600 text-white py-2 px-4 rounded-lg mt-4 md:mt-0"
+                  className="bg-[#0F766E] text-white py-2 px-4 rounded-lg mt-4 md:mt-0"
                 >
                   Add To Cart
                 </button>

@@ -71,15 +71,15 @@ const Login = () => {
                         <button
                         type="submit"
                         disabled={isLoading}
-                        className="bg-pink-500 text-white px-4 py-2 rounded cursor-pointer my-[1rem]">
+                        className="bg-[#0F766E] text-white px-4 py-2 rounded cursor-pointer my-[1rem]">
                             {isLoading ? "Signing in.." : "Sign In"}
                         </button>
 
                         {isLoading && <Loader />}
                     </form>
                     <div className="mt-4">
-                        <p className="text-white">
-                            New Customer ? {" "} <Link to= {redirect ? `redirect?${redirect}` : '/register'}  className="text-pink-500 hover:underline">Register</Link>
+                        <p className="text-[#1F2937]">
+                            New Customer ? {" "} <Link to= {redirect ? `redirect?${redirect}` : '/register'}  className="text-[#0F766E] hover:underline">Register</Link>
                         </p>
                     </div>
                 </div>

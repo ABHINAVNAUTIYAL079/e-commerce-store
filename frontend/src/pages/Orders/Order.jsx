@@ -94,7 +94,7 @@ const Order = () => {
   ) : (
     <div className="container flex flex-col ml-[10rem] md:flex-row">
       <div className="md:w-2/3 pr-4">
-        <div className="border gray-300 mt-5 pb-4 mb-5">
+        <div className="border border-gray-300 rounded-lg p-4 mt-5 pb-4 mb-5">
           {order.orderItems.length === 0 ? (
             <Messsage>Order is empty</Messsage>
           ) : (
@@ -140,29 +140,29 @@ const Order = () => {
       </div>
 
       <div className="md:w-1/3">
-        <div className="mt-5 border-gray-300 pb-4 mb-4">
+        <div className="mt-5 border border-gray-300 rounded-lg p-4 pb-4 mb-4">
           <h2 className="text-xl font-bold mb-2">Shipping</h2>
           <p className="mb-4 mt-4">
-            <strong className="text-pink-500">Order:</strong> {order._id}
+            <strong className="text-[#0F766E]">Order:</strong> {order._id}
           </p>
 
           <p className="mb-4">
-            <strong className="text-pink-500">Name:</strong>{" "}
+            <strong className="text-[#0F766E]">Name:</strong>{" "}
             {order.user.username}
           </p>
 
           <p className="mb-4">
-            <strong className="text-pink-500">Email:</strong> {order.user.email}
+            <strong className="text-[#0F766E]">Email:</strong> {order.user.email}
           </p>
 
           <p className="mb-4">
-            <strong className="text-pink-500">Address:</strong>{" "}
+            <strong className="text-[#0F766E]">Address:</strong>{" "}
             {order.shippingAddress.address}, {order.shippingAddress.city}{" "}
             {order.shippingAddress.postalCode}, {order.shippingAddress.country}
           </p>
 
           <p className="mb-4">
-            <strong className="text-pink-500">Method:</strong>{" "}
+            <strong className="text-[#0F766E]">Method:</strong>{" "}
             {order.paymentMethod}
           </p>
 
@@ -215,7 +215,7 @@ const Order = () => {
           <div>
             <button
               type="button"
-              className="bg-pink-500 text-white w-full py-2"
+              className="bg-[#0F766E] text-white w-full py-2"
               onClick={deliverHandler}
             >
               Mark As Delivered

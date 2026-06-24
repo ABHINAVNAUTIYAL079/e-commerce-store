@@ -90,7 +90,7 @@ const UserList = () => {
                         />
                         <button
                           onClick={() => updateHandler(user._id)}
-                          className="ml-2 bg-blue-500 text-white py-2 px-4 rounded-lg"
+                          className="ml-2 bg-[#0F766E] text-white py-2 px-4 rounded-lg hover:bg-[#0d6d66] transition-colors duration-200"
                         >
                           <FaCheck />
                         </button>
@@ -119,7 +119,7 @@ const UserList = () => {
                         />
                         <button
                           onClick={() => updateHandler(user._id)}
-                          className="ml-2 bg-blue-500 text-white py-2 px-4 rounded-lg"
+                          className="ml-2 bg-[#0F766E] text-white py-2 px-4 rounded-lg hover:bg-[#0d6d66] transition-colors duration-200"
                         >
                           <FaCheck />
                         </button>

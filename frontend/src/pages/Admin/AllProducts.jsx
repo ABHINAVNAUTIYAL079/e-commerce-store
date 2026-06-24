@@ -41,19 +41,19 @@ const AllProducts = () => {
                         {product?.name}
                       </h5>
 
-                      <p className="text-gray-400 text-xs">
+                      <p className="text-gray-500 text-xs">
                         {moment(product.createdAt).format("MMMM Do YYYY")}
                       </p>
                     </div>
 
-                    <p className="text-gray-400 xl:w-[30rem] lg:w-[30rem] md:w-[20rem] sm:w-[10rem] text-sm mb-4">
+                    <p className="text-gray-600 xl:w-[30rem] lg:w-[30rem] md:w-[20rem] sm:w-[10rem] text-sm mb-4">
                       {product?.description?.substring(0, 160)}...
                     </p>
 
                     <div className="flex justify-between items-center">
                       <Link
                         to={`/admin/product/update/${product._id}`}
-                        className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-pink-700 rounded-lg hover:bg-pink-800 focus:ring-4 focus:outline-none focus:ring-pink-300"
+                        className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-[#0F766E] rounded-lg hover:bg-[#0d6d66] focus:ring-4 focus:outline-none focus:ring-[#5EEAD4]"
                       >
                         Update Product
                         <svg

@@ -54,7 +54,7 @@ const Navigation = () => {
   return (
     <div
       style={{ zIndex: 999 }}
-      className={`${showsideBar ? "hidden" : "flex"} xl:flex lg:flex md:hidden sm:hidden flex-col justify-between p-4 text-white bg-[#000000] w-[4%] hover:w-[15%] h-[100vh]  fixed`}
+      className={`${showsideBar ? "hidden" : "flex"} xl:flex lg:flex md:hidden sm:hidden flex-col justify-between p-4 text-white bg-[#1F2937] w-[4%] hover:w-[15%] h-[100vh]  fixed`}
       id="navigation-container"
     >
       <div className="flex flex-col justify-center space-y-4">
@@ -81,7 +81,7 @@ const Navigation = () => {
           <AiOutlineShoppingCart className="mr-2 mt-12" size={26} />
 
           {cartItems.length > 0 && (
-            <span className="absolute top-10 left-3 px-1 text-xs text-white bg-pink-500 rounded-full">
+            <span className="absolute top-10 left-3 px-1 text-xs text-white bg-[#0F766E] rounded-full">
               {cartItems.reduce((a, c) => a + Number(c.qty), 0)}
             </span>
           )}

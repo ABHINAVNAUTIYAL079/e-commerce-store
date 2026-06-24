@@ -30,7 +30,7 @@ const Cart = () => {
             Your Cart is Empty{" "}
             <Link
               to="/shop"
-              className="bg-pink-600 border text-black font-semibold"
+              className="bg-[#0F766E] border text-white font-semibold"
             >
               Go To Shop
             </Link>
@@ -51,26 +51,26 @@ const Cart = () => {
                   </div>
 
                   <div className="flex-1 ml-4">
-                    <Link to={`/product/${item._id}`} className="text-pink-500">
+                    <Link to={`/product/${item._id}`} className="text-[#0F766E]">
                       {item.name}
                     </Link>
 
-                    <div className="mt-2 text-white">{item.brand}</div>
-                    <div className="mt-2 text-white font-bold">
+                    <div className="mt-2 text-[#1F2937]">{item.brand}</div>
+                    <div className="mt-2 text-[#1F2937] font-bold">
                       ₹ {item.price}
                     </div>
                   </div>
 
                   <div className="w-24">
                     <select
-                      className="w-full p-1 border rounded text-white"
+                      className="w-full p-1 border rounded text-[#1F2937]"
                       value={item.qty}
                       onChange={(e) =>
                         addToCartHandler(item, Number(e.target.value))
                       }
                     >
                       {[...Array(item.countInStock).keys()].map((x) => (
-                        <option key={x + 1} value={x + 1} className="bg-black">
+                        <option key={x + 1} value={x + 1} className="bg-white">
                           {x + 1}
                         </option>
                       ))}
@@ -102,7 +102,7 @@ const Cart = () => {
                   </div>
 
                   <button
-                    className="bg-pink-500 mt-4 py-2 px-4 rounded-full text-lg w-full"
+                    className="bg-[#0F766E] mt-4 py-2 px-4 rounded-full text-lg w-full text-white"
                     disabled={cartItems.length === 0}
                     onClick={checkoutHandler}
                   >

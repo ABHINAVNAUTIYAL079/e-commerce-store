@@ -70,14 +70,14 @@ const ProductTabs = ({
                       required
                       value={rating}
                       onChange={(e) => setRating(e.target.value)}
-                      className="p-2 border rounded-lg xl:w-[40rem] text-white"
+                      className="p-2 border rounded-lg xl:w-[40rem] text-[#1F2937]"
                     >
-                      <option value="" className="bg-black">Select</option>
-                      <option value="1" className="bg-black">Inferior</option>
-                      <option value="2" className="bg-black">Decent</option>
-                      <option value="3" className="bg-black">Great</option>
-                      <option value="4" className="bg-black">Excellent</option>
-                      <option value="5" className="bg-black">Exceptional</option>
+                      <option value="" className="bg-white">Select</option>
+                      <option value="1" className="bg-white">Inferior</option>
+                      <option value="2" className="bg-white">Decent</option>
+                      <option value="3" className="bg-white">Great</option>
+                      <option value="4" className="bg-white">Excellent</option>
+                      <option value="5" className="bg-white">Exceptional</option>
                     </select>
                   </div>
 
@@ -92,13 +92,13 @@ const ProductTabs = ({
                       required
                       value={comment}
                       onChange={(e) => setComment(e.target.value)}
-                      className="p-2 border rounded-lg xl:w-[40rem] text-black"
+                      className="p-2 border rounded-lg xl:w-[40rem] text-[#1F2937]"
                     ></textarea>
                   </div>
                   <button
                     type="submit"
                     disabled={loadingProductReview}
-                    className="bg-pink-600 text-white py-2 px-4 rounded-lg"
+                    className="bg-[#0F766E] text-white py-2 px-4 rounded-lg"
                   >
                     Submit
                   </button>
@@ -121,11 +121,11 @@ const ProductTabs = ({
                 {product.reviews.map((review) => (
                   <div
                     key={review._id}
-                    className="bg-[#1A1A1A] p-4 rounded-lg xl:ml-[2rem] sm:ml-[0rem] xl:w-[50rem] sm:w-[24rem] mb-5"
+                    className="bg-gray-50 p-4 rounded-lg xl:ml-[2rem] sm:ml-[0rem] xl:w-[50rem] sm:w-[24rem] mb-5 border border-gray-200"
                   >
                     <div className="flex justify-between">
-                      <strong className="text-[#B0B0B0]">{review.name}</strong>
-                      <p className="text-[#B0B0B0]">
+                      <strong className="text-[#1F2937]">{review.name}</strong>
+                      <p className="text-gray-500">
                         {review.createdAt.substring(0, 10)}
                       </p>
                     </div>

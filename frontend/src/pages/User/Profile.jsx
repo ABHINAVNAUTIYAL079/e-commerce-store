@@ -47,7 +47,7 @@ const Profile = () => {
           <h2 className="text-2xl font-semibold mb-4">Update Profile</h2>
           <form onSubmit={submitHandler}>
             <div className="mb-4">
-              <label className="block text-white mb-2">Name</label>
+              <label className="block text-[#1F2937] mb-2">Name</label>
               <input
                 type="text"
                 placeholder="Enter name"
@@ -58,7 +58,7 @@ const Profile = () => {
             </div>
 
             <div className="mb-4">
-              <label className="block text-white mb-2">Email Address</label>
+              <label className="block text-[#1F2937] mb-2">Email Address</label>
               <input
                 type="email"
                 placeholder="Enter email"
@@ -69,7 +69,7 @@ const Profile = () => {
             </div>
 
             <div className="mb-4">
-              <label className="block text-white mb-2">Password</label>
+              <label className="block text-[#1F2937] mb-2">Password</label>
               <input
                 type="password"
                 placeholder="Enter password"
@@ -80,7 +80,7 @@ const Profile = () => {
             </div>
 
             <div className="mb-4">
-              <label className="block text-white mb-2">Confirm Password</label>
+              <label className="block text-[#1F2937] mb-2">Confirm Password</label>
               <input
                 type="password"
                 placeholder="Confirm password"
@@ -93,14 +93,14 @@ const Profile = () => {
             <div className="flex justify-between">
               <button
                 type="submit"
-                className="bg-pink-500 text-white py-2 px-4 rounded hover:bg-pink-600"
+                className="bg-[#0F766E] text-white py-2 px-4 rounded hover:bg-[#0d6d66] transition-colors duration-200"
               >
                 Update
               </button>
 
               <Link
                 to="/user-orders"
-                className="bg-pink-600 text-white py-2 px-4 rounded hover:bg-pink-700"
+                className="bg-[#1F2937] text-white py-2 px-4 rounded hover:bg-[#2d3a4b] transition-colors duration-200"
               >
                 My Orders
               </Link>

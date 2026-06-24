@@ -71,34 +71,34 @@ const ProductCarousel = () => {
                   <div className="flex justify-between w-[20rem]">
                     <div>
                       <h1 className="flex items-center mb-6">
-                        <FaStore className="mr-2 text-white" />
+                        <FaStore className="mr-2 text-[#0F766E]" />
                         Brand: {brand}
                       </h1>
 
                       <h1 className="flex items-center mb-6">
-                        <FaClock className="mr-2 text-white" />
+                        <FaClock className="mr-2 text-[#0F766E]" />
                         Added: {moment(createdAt).fromNow()}
                       </h1>
 
                       <h1 className="flex items-center mb-6">
-                        <FaStar className="mr-2 text-white" />
+                        <FaStar className="mr-2 text-[#0F766E]" />
                         Reviews: {numReviews}
                       </h1>
                     </div>
 
                     <div>
                       <h1 className="flex items-center mb-6">
-                        <FaStar className="mr-2 text-white" />
+                        <FaStar className="mr-2 text-[#0F766E]" />
                         Ratings: {Math.round(rating)}
                       </h1>
 
                       <h1 className="flex items-center mb-6">
-                        <FaShoppingCart className="mr-2 text-white" />
+                        <FaShoppingCart className="mr-2 text-[#0F766E]" />
                         Quantity: {quantity}
                       </h1>
 
                       <h1 className="flex items-center mb-6">
-                        <FaBox className="mr-2 text-white" />
+                        <FaBox className="mr-2 text-[#0F766E]" />
                         In Stock: {countInStock}
                       </h1>
                     </div>
