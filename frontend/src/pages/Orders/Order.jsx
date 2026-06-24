@@ -1,6 +1,5 @@
-import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
+
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import Messsage from "../../components/Message";
@@ -8,7 +7,8 @@ import Loader from "../../components/Loader";
 import {
   useDeliverOrderMutation,
   useGetOrderDetailsQuery,
-  useGetPaypalClientIdQuery,
+  useGetRazorpayKeyIdQuery,
+  useCreateRazorpayOrderMutation,
   usePayOrderMutation,
 } from "../../redux/api/orderApiSlice";
 
@@ -27,60 +27,73 @@ const Order = () => {
     useDeliverOrderMutation();
   const { userInfo } = useSelector((state) => state.auth);
 
-  const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
+  const [createRazorpayOrder, { isLoading: loadingRazorpayOrder }] = useCreateRazorpayOrderMutation();
+  const { data: razorpayConfig, isLoading: loadingRazorpayConfig } = useGetRazorpayKeyIdQuery();
 
-  const {
-    data: paypal,
-    isLoading: loadingPaPal,
-    error: errorPayPal,
-  } = useGetPaypalClientIdQuery();
+  const loadRazorpay = () => {
+    return new Promise((resolve) => {
+      if (window.Razorpay) {
+        resolve(true);
+        return;
+      }
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.async = true;
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
 
-  useEffect(() => {
-    if (!errorPayPal && !loadingPaPal && paypal.clientId) {
-      const loadingPaPalScript = async () => {
-        paypalDispatch({
-          type: "resetOptions",
-          value: {
-            "client-id": paypal.clientId,
-            currency: "INR",
-          },
-        });
-        paypalDispatch({ type: "setLoadingStatus", value: "pending" });
+  const payHandler = async () => {
+    try {
+      const scriptLoaded = await loadRazorpay();
+      if (!scriptLoaded) {
+        toast.error("Razorpay SDK failed to load. Are you online?");
+        return;
+      }
+
+      const rzpOrderResponse = await createRazorpayOrder(orderId).unwrap();
+
+      console.log(rzpOrderResponse);
+      const options = {
+        key: razorpayConfig?.keyId,
+        amount: rzpOrderResponse.amount,
+        currency: rzpOrderResponse.currency,
+        name: "Ab Store",
+        description: `Payment for Order #${orderId}`,
+        order_id: rzpOrderResponse.id,
+        handler: async function (response) {
+          try {
+            await payOrder({
+              orderId,
+              details: {
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+              },
+            }).unwrap();
+            refetch();
+            toast.success("Payment successful!");
+          } catch (err) {
+            toast.error(err?.data?.message || err.message);
+          }
+        },
+        prefill: {
+          name: order?.user?.username || "",
+          email: order?.user?.email || "",
+        },
+        theme: {
+          color: "#0F766E",
+        },
       };
 
-      if (order && !order.isPaid) {
-        if (!window.paypal) {
-          loadingPaPalScript();
-        }
-      }
+      const paymentObject = new window.Razorpay(options);
+      paymentObject.open();
+    } catch (err) {
+      toast.error(err?.data?.message || err.message);
     }
-  }, [errorPayPal, loadingPaPal, order, paypal, paypalDispatch]);
-
-  function onApprove(data, actions) {
-    return actions.order.capture().then(async function (details) {
-      try {
-        await payOrder({ orderId, details });
-        refetch();
-        toast.success("Order is paid");
-      } catch (error) {
-        toast.error(error?.data?.message || error.message);
-      }
-    });
-  }
-
-  function createOrder(data, actions) {
-    return actions.order
-      .create({
-        purchase_units: [{ amount: { value: order.totalPrice } }],
-      })
-      .then((orderID) => {
-        return orderID;
-      });
-  }
-
-  function onError(err) {
-    toast.error(err.message);
-  }
+  };
 
   const deliverHandler = async () => {
     await deliverOrder(orderId);
@@ -128,7 +141,7 @@ const Order = () => {
                       <td className="p-2 text-center">{item.qty}</td>
                       <td className="p-2 text-center">{item.price}</td>
                       <td className="p-2 text-center">
-                        $ {(item.qty * item.price).toFixed(2)}
+                        ₹ {(item.qty * item.price).toFixed(2)}
                       </td>
                     </tr>
                   ))}
@@ -167,7 +180,7 @@ const Order = () => {
           </p>
 
           {order.isPaid ? (
-            <Messsage variant="success">Paid on {order.paidAt}</Messsage>
+            <Messsage variant="success">Paid on {new Date(order.paidAt).toLocaleString()}</Messsage>
           ) : (
             <Messsage variant="danger">Not paid</Messsage>
           )}
@@ -176,36 +189,34 @@ const Order = () => {
         <h2 className="text-xl font-bold mb-2 mt-[3rem]">Order Summary</h2>
         <div className="flex justify-between mb-2">
           <span>Items</span>
-          <span>$ {order.itemsPrice}</span>
+          <span>₹ {order.itemsPrice}</span>
         </div>
         <div className="flex justify-between mb-2">
           <span>Shipping</span>
-          <span>$ {order.shippingPrice}</span>
+          <span>₹ {order.shippingPrice}</span>
         </div>
         <div className="flex justify-between mb-2">
           <span>Tax</span>
-          <span>$ {order.taxPrice}</span>
+          <span>₹ {order.taxPrice}</span>
         </div>
         <div className="flex justify-between mb-2">
           <span>Total</span>
-          <span>$ {order.totalPrice}</span>
+          <span>₹ {order.totalPrice}</span>
         </div>
 
         {!order.isPaid && (
-          <div>
-            {loadingPay && <Loader />}{" "}
-            {isPending ? (
+          <div className="mt-4">
+            {loadingPay || loadingRazorpayOrder ? (
               <Loader />
             ) : (
-              <div>
-                <div>
-                  <PayPalButtons
-                    createOrder={createOrder}
-                    onApprove={onApprove}
-                    onError={onError}
-                  ></PayPalButtons>
-                </div>
-              </div>
+              <button
+                type="button"
+                className="bg-[#0F766E] text-white w-full py-3 rounded-md font-semibold hover:bg-[#0d635c] transition-all cursor-pointer"
+                onClick={payHandler}
+                disabled={loadingRazorpayConfig}
+              >
+                Pay with Razorpay
+              </button>
             )}
           </div>
         )}

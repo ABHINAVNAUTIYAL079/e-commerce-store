@@ -1,3 +1,4 @@
+import crypto from "crypto";
 import Order from "../models/orderModel.js";
 import Product from "../models/productModel.js";
 import asyncHandler from "../middlewares/asyncHandler.js";
@@ -160,20 +161,81 @@ const findOrderById = async (req, res) => {
 
 const markOrderAsPaid = async (req, res) => {
   try {
-    const order = await Order.findById(req.params.id);
+    const order = await Order.findById(req.params.id).populate("user", "email");
 
     if (order) {
+      const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+
+      if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
+        res.status(400);
+        throw new Error("Missing Razorpay signature verification parameters");
+      }
+
+      const shasum = crypto.createHmac("sha256", process.env.RAZORPAY_KEY_SECRET);
+      shasum.update(`${razorpay_order_id}|${razorpay_payment_id}`);
+      const digest = shasum.digest("hex");
+
+      if (digest !== razorpay_signature) {
+        res.status(400);
+        throw new Error("Payment signature verification failed. Transaction is not authentic.");
+      }
+
       order.isPaid = true;
       order.paidAt = Date.now();
       order.paymentResult = {
-        id: req.body.id,
-        status: req.body.status,
-        update_time: req.body.update_time,
-        email_address: req.body.payer.email_address,
+        id: razorpay_payment_id,
+        status: "COMPLETED",
+        update_time: new Date().toISOString(),
+        email_address: order.user ? order.user.email : "",
       };
 
       const updateOrder = await order.save();
       res.status(200).json(updateOrder);
+    } else {
+      res.status(404);
+      throw new Error("Order not found");
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const createRazorpayOrder = async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id);
+
+    if (order) {
+      const keyId = process.env.RAZORPAY_KEY_ID;
+      const keySecret = process.env.RAZORPAY_KEY_SECRET;
+
+      if (!keyId || !keySecret) {
+        res.status(500);
+        throw new Error("Razorpay credentials are not configured in .env file");
+      }
+
+      const auth = Buffer.from(`${keyId}:${keySecret}`).toString("base64");
+
+      const response = await fetch("https://api.razorpay.com/v1/orders", {
+        method: "POST",
+        headers: {
+          "Authorization": `Basic ${auth}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          amount: Math.round(order.totalPrice * 100),
+          currency: "INR",
+          receipt: `receipt_${order._id}`,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        res.status(response.status);
+        throw new Error(data.error ? data.error.description : "Failed to create Razorpay order");
+      }
+
+      res.status(200).json(data);
     } else {
       res.status(404);
       throw new Error("Order not found");
@@ -212,4 +274,5 @@ export {
   findOrderById,
   markOrderAsPaid,
   markOrderAsDelivered,
+  createRazorpayOrder,
 };

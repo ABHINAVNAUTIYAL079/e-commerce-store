@@ -1,5 +1,5 @@
 import { apiSlice } from "./apiSlice";
-import { ORDERS_URL, PAYPAL_URL } from "../constants";
+import { ORDERS_URL, RAZORPAY_URL } from "../constants";
 
 export const orderApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
@@ -25,9 +25,16 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       }),
     }),
 
-    getPaypalClientId: builder.query({
+    getRazorpayKeyId: builder.query({
       query: () => ({
-        url: PAYPAL_URL,
+        url: RAZORPAY_URL,
+      }),
+    }),
+
+    createRazorpayOrder: builder.mutation({
+      query: (orderId) => ({
+        url: `${ORDERS_URL}/${orderId}/razorpay-order`,
+        method: "POST",
       }),
     }),
 
@@ -69,7 +76,8 @@ export const {
     useCreateOrderMutation,
     useGetOrderDetailsQuery,
     usePayOrderMutation,
-    useGetPaypalClientIdQuery,
+    useGetRazorpayKeyIdQuery,
+    useCreateRazorpayOrderMutation,
     useGetMyOrdersQuery,
     useGetOrdersQuery,
     useDeliverOrderMutation,

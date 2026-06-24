@@ -13,6 +13,7 @@ import {
   findOrderById,
   markOrderAsPaid,
   markOrderAsDelivered,
+  createRazorpayOrder,
 } from "../controllers/orderController.js";
 
 const router = express.Router();
@@ -29,6 +30,7 @@ router.route("/total-sales").get(calculateTotalSales);
 router.route("/total-sales-by-date").get(calculateTotalSalesByDate);
 router.route("/:id").get(authenticateUser, findOrderById);
 router.route("/:id/pay").put(authenticateUser, markOrderAsPaid);
+router.route("/:id/razorpay-order").post(authenticateUser, createRazorpayOrder);
 router
   .route("/:id/deliver")
   .put(authenticateUser, authorizeAdmin, markOrderAsDelivered);
